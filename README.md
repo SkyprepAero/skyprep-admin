@@ -1,46 +1,186 @@
-# Getting Started with Create React App
+# SkyPrep Admin Panel
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+A comprehensive React admin panel for managing test series with subjects, chapters, questions, and options. Built with React, Vite, Tailwind CSS, and shadcn/ui components.
 
-## Available Scripts
+## Features
 
-In the project directory, you can run:
+- **Subject Management**: Create, edit, delete, and restore subjects
+- **Chapter Management**: Organize chapters within subjects
+- **Question Management**: Create multiple choice questions with options
+- **Soft Delete System**: Safe deletion with restore functionality
+- **Advanced Filtering**: Search and filter by various criteria
+- **Responsive Design**: Mobile-friendly interface
+- **Modern UI**: Clean and intuitive design with Tailwind CSS
 
-### `npm start`
+## Tech Stack
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+- **Frontend**: React 18, Vite
+- **Styling**: Tailwind CSS, shadcn/ui components
+- **Routing**: React Router DOM
+- **HTTP Client**: Axios
+- **Icons**: Lucide React
+- **Notifications**: React Hot Toast
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+## Getting Started
 
-### `npm test`
+### Prerequisites
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+- Node.js (version 16 or higher)
+- npm or yarn
 
-### `npm run build`
+### Installation
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+1. Clone the repository:
+```bash
+git clone <repository-url>
+cd skyprep-admin
+```
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+2. Install dependencies:
+```bash
+npm install
+```
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+3. Set up environment configuration:
+```bash
+# Run the setup script to create .env file
+npm run setup
+```
 
-### `npm run eject`
+Or manually create `.env` file and add environment variables:
+```env
+# API Configuration
+VITE_API_BASE_URL=https://api.skyprepaero.com/api/v1
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+# App Configuration
+VITE_APP_NAME=SkyPrep Admin
+VITE_APP_VERSION=1.0.0
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+# For local development, you can override the API URL:
+# VITE_API_BASE_URL=http://localhost:5000/api/v1
+```
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+5. Start the development server:
+```bash
+npm run dev
+```
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+6. Open your browser and navigate to `http://localhost:5173`
 
-## Learn More
+## Project Structure
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+```
+src/
+├── components/
+│   ├── Layout.jsx          # Main layout with sidebar
+│   └── ui/                 # Reusable UI components
+├── lib/
+│   ├── api.js             # API service functions
+│   ├── axios.js           # Centralized axios configuration
+│   └── utils.js           # Utility functions
+├── config/
+│   ├── env.js             # Environment configuration
+│   └── README.md          # Configuration documentation
+├── pages/
+│   ├── Dashboard.jsx       # Main dashboard
+│   ├── Subjects.jsx        # Subject management
+│   ├── SubjectForm.jsx     # Subject create/edit form
+│   ├── Chapters.jsx        # Chapter management
+│   ├── ChapterForm.jsx     # Chapter create/edit form
+│   ├── Questions.jsx       # Question management
+│   └── QuestionForm.jsx    # Question create/edit form
+├── App.jsx                 # Main app component
+├── main.jsx               # App entry point
+└── index.css              # Global styles
+```
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+## API Integration
+
+The admin panel integrates with the Question System API using a centralized axios configuration. The API base URL is configured via environment variables.
+
+### Centralized Axios Configuration
+
+The project uses a centralized axios instance (`src/lib/axios.js`) with the following features:
+
+- **Environment-based configuration**: API URL loaded from environment variables
+- **Request/Response interceptors**: Automatic token management and error handling
+- **Error handling**: Centralized error handling with user-friendly toast notifications
+- **Request logging**: Development-only logging for debugging
+- **Retry logic**: Automatic retry for network errors
+- **Timeout configuration**: 10-second timeout for all requests
+
+### API Endpoints Used
+
+- **Subjects**: `/api/v1/subjects`
+- **Chapters**: `/api/v1/chapters`
+- **Questions**: `/api/v1/questions`
+- **Options**: `/api/v1/options`
+
+### Environment Configuration
+
+The API base URL is configured in the environment file:
+
+```env
+# Production API
+VITE_API_BASE_URL=https://api.skyprepaero.com/api/v1
+
+# Development API (override for local development)
+# VITE_API_BASE_URL=http://localhost:5000/api/v1
+```
+
+## Features Overview
+
+### Dashboard
+- Overview statistics
+- Quick action buttons
+- Recent activity feed
+
+### Subject Management
+- Create, edit, delete subjects
+- Soft delete with restore functionality
+- Search and filter subjects
+- Pagination support
+
+### Chapter Management
+- Create chapters within subjects
+- Subject-based filtering
+- Order management
+- Soft delete support
+
+### Question Management
+- Create multiple choice questions
+- Add 2-4 options per question
+- Difficulty levels (Easy, Medium, Hard)
+- Marks assignment
+- Chapter and subject filtering
+- Advanced search functionality
+
+## Development
+
+### Available Scripts
+
+- `npm run setup` - Set up environment configuration
+- `npm run dev` - Start development server
+- `npm run build` - Build for production
+- `npm run preview` - Preview production build
+- `npm run lint` - Run ESLint
+
+### Code Style
+
+The project uses ESLint for code linting. Make sure to follow the configured rules.
+
+## Contributing
+
+1. Fork the repository
+2. Create a feature branch
+3. Make your changes
+4. Test thoroughly
+5. Submit a pull request
+
+## License
+
+This project is licensed under the MIT License.
+
+## Support
+
+For support or questions, please contact the development team.
