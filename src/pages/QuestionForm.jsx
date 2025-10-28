@@ -65,7 +65,17 @@ const QuestionForm = () => {
     try {
       setInitialLoading(true)
       const response = await questionAPI.getById(id)
-      setFormData(response.data.data)
+      const questionData = response.data.data
+      
+      // Handle populated chapter data
+      const formData = {
+        ...questionData,
+        chapter: typeof questionData.chapter === 'object' 
+          ? questionData.chapter._id 
+          : questionData.chapter
+      }
+      
+      setFormData(formData)
       
       // Fetch options for the question
       const optionsResponse = await optionAPI.getByQuestion(id)

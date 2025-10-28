@@ -105,9 +105,15 @@ const Chapters = () => {
     setPagination(prev => ({ ...prev, currentPage: page }))
   }
 
-  const getSubjectName = (subjectId) => {
-    const subject = subjects.find(s => s._id === subjectId)
-    return subject ? subject.name : 'Unknown Subject'
+  const getSubjectName = (subject) => {
+    // Handle both populated subject object and subject ID
+    if (typeof subject === 'object' && subject.name) {
+      return subject.name
+    }
+    
+    // Fallback to looking up by ID
+    const subjectObj = subjects.find(s => s._id === subject)
+    return subjectObj ? subjectObj.name : 'Unknown Subject'
   }
 
   if (loading) {

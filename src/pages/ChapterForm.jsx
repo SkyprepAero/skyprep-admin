@@ -47,7 +47,17 @@ const ChapterForm = () => {
     try {
       setInitialLoading(true)
       const response = await chapterAPI.getById(id)
-      setFormData(response.data.data)
+      const chapterData = response.data.data
+      
+      // Handle populated subject data
+      const formData = {
+        ...chapterData,
+        subject: typeof chapterData.subject === 'object' 
+          ? chapterData.subject._id 
+          : chapterData.subject
+      }
+      
+      setFormData(formData)
     } catch (error) {
       console.error('Error fetching chapter:', error)
       toast.error('Failed to fetch chapter')

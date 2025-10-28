@@ -131,15 +131,33 @@ const Questions = () => {
     setPagination(prev => ({ ...prev, currentPage: page }))
   }
 
-  const getChapterName = (chapterId) => {
-    const chapter = chapters.find(c => c._id === chapterId)
-    return chapter ? chapter.name : 'Unknown Chapter'
+  const getChapterName = (chapter) => {
+    // Handle both populated chapter object and chapter ID
+    if (typeof chapter === 'object' && chapter.name) {
+      return chapter.name
+    }
+    
+    // Fallback to looking up by ID
+    const chapterObj = chapters.find(c => c._id === chapter)
+    return chapterObj ? chapterObj.name : 'Unknown Chapter'
   }
 
-  const getSubjectName = (chapterId) => {
-    const chapter = chapters.find(c => c._id === chapterId)
-    if (!chapter) return 'Unknown Subject'
-    const subject = subjects.find(s => s._id === chapter.subject)
+  const getSubjectName = (chapter) => {
+    // Handle both populated chapter object and chapter ID
+    if (typeof chapter === 'object' && chapter.subject) {
+      // If chapter has populated subject
+      if (typeof chapter.subject === 'object' && chapter.subject.name) {
+        return chapter.subject.name
+      }
+      // If chapter has subject ID, look it up
+      const subject = subjects.find(s => s._id === chapter.subject)
+      return subject ? subject.name : 'Unknown Subject'
+    }
+    
+    // Fallback to looking up by ID
+    const chapterObj = chapters.find(c => c._id === chapter)
+    if (!chapterObj) return 'Unknown Subject'
+    const subject = subjects.find(s => s._id === chapterObj.subject)
     return subject ? subject.name : 'Unknown Subject'
   }
 

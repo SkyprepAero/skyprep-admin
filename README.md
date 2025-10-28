@@ -181,6 +181,61 @@ The project uses ESLint for code linting. Make sure to follow the configured rul
 
 This project is licensed under the MIT License.
 
+## Deployment
+
+### Vercel Deployment
+
+The project is configured for easy deployment on Vercel:
+
+1. **Build Configuration**: The project builds to a `build` directory (configured in `vite.config.js`)
+2. **Vercel Configuration**: `vercel.json` is included with proper settings
+3. **Environment Variables**: Set in Vercel dashboard or via CLI
+
+#### Deploy to Vercel
+
+1. **Via Vercel CLI**:
+   ```bash
+   npm install -g vercel
+   vercel
+   ```
+
+2. **Via Vercel Dashboard**:
+   - Connect your GitHub repository
+   - Vercel will automatically detect the Vite framework
+   - Set environment variables in the dashboard
+
+#### Environment Variables for Production
+
+Set these in your Vercel dashboard:
+
+```env
+VITE_API_BASE_URL=https://api.skyprepaero.com/api/v1
+VITE_APP_NAME=SkyPrep Admin
+VITE_APP_VERSION=1.0.0
+```
+
+### Build Optimization
+
+The build includes several optimizations:
+
+- **Code Splitting**: Vendor, router, and UI libraries are split into separate chunks
+- **Minification**: Terser minification for smaller bundle sizes
+- **Tree Shaking**: Unused code is automatically removed
+- **Asset Optimization**: CSS and JS assets are optimized and compressed
+
+### Build Commands
+
+```bash
+# Development build
+npm run dev
+
+# Production build
+npm run build
+
+# Preview production build locally
+npm run preview
+```
+
 ## Support
 
 For support or questions, please contact the development team.
