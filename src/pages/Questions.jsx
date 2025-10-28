@@ -67,11 +67,12 @@ const Questions = () => {
         ? await questionAPI.getDeleted(params)
         : await questionAPI.getAll(params)
 
-      setQuestions(response.data.data.questions || response.data.data)
-      setPagination(response.data.data.pagination || {
+      const responseData = response.data.data
+      setQuestions(responseData.questions || responseData)
+      setPagination(responseData.pagination || {
         currentPage: 1,
         totalPages: 1,
-        totalItems: response.data.data.length || 0,
+        totalItems: responseData.length || 0,
         itemsPerPage: 10
       })
     } catch (error) {
@@ -345,24 +346,39 @@ const Questions = () => {
 
       {/* Pagination */}
       {pagination.totalPages > 1 && (
-        <div className="flex justify-center space-x-2">
-          <Button
-            variant="outline"
-            onClick={() => handlePageChange(pagination.currentPage - 1)}
-            disabled={pagination.currentPage === 1}
-          >
-            Previous
-          </Button>
-          <span className="flex items-center px-4 py-2 text-sm text-gray-700">
-            Page {pagination.currentPage} of {pagination.totalPages}
-          </span>
-          <Button
-            variant="outline"
-            onClick={() => handlePageChange(pagination.currentPage + 1)}
-            disabled={pagination.currentPage === pagination.totalPages}
-          >
-            Next
-          </Button>
+        <div className="flex flex-col items-center space-y-4">
+          <div className="flex items-center space-x-2">
+            <Button
+              variant="outline"
+              onClick={() => handlePageChange(pagination.currentPage - 1)}
+              disabled={pagination.currentPage === 1}
+            >
+              Previous
+            </Button>
+            <div className="flex items-center space-x-1">
+              {Array.from({ length: pagination.totalPages }, (_, i) => i + 1).map(page => (
+                <Button
+                  key={page}
+                  variant={page === pagination.currentPage ? "default" : "outline"}
+                  size="sm"
+                  onClick={() => handlePageChange(page)}
+                  className="w-8 h-8 p-0"
+                >
+                  {page}
+                </Button>
+              ))}
+            </div>
+            <Button
+              variant="outline"
+              onClick={() => handlePageChange(pagination.currentPage + 1)}
+              disabled={pagination.currentPage === pagination.totalPages}
+            >
+              Next
+            </Button>
+          </div>
+          <div className="text-sm text-gray-600">
+            Showing {((pagination.currentPage - 1) * pagination.itemsPerPage) + 1} to {Math.min(pagination.currentPage * pagination.itemsPerPage, pagination.totalItems)} of {pagination.totalItems} results
+          </div>
         </div>
       )}
     </div>
