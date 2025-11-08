@@ -32,7 +32,12 @@ const SubjectForm = () => {
     try {
       setInitialLoading(true)
       const response = await subjectAPI.getById(id)
-      setFormData(response.data.data)
+      const subjectData = response.data.data
+      setFormData({
+        name: subjectData.name || '',
+        description: subjectData.description || '',
+        isActive: subjectData.isActive ?? true
+      })
     } catch (error) {
       console.error('Error fetching subject:', error)
       toast.error('Failed to fetch subject')

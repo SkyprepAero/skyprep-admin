@@ -230,7 +230,7 @@ const Chapters = () => {
                       Deleted: {new Date(chapter.deletedAt).toLocaleDateString()}
                     </div>
                   )}
-                  <div className="flex space-x-2 pt-2">
+                  <div className="flex flex-wrap gap-2 pt-2">
                     {showDeleted ? (
                       <Button
                         size="sm"
@@ -242,6 +242,12 @@ const Chapters = () => {
                       </Button>
                     ) : (
                       <>
+                        <Link to={`/questions/new?chapter=${chapter._id}&redirect=/chapters`}>
+                          <Button size="sm">
+                            <Plus className="h-4 w-4 mr-1" />
+                            Add Question
+                          </Button>
+                        </Link>
                         <Link to={`/chapters/${chapter._id}/edit`}>
                           <Button size="sm" variant="outline">
                             <Edit className="h-4 w-4 mr-1" />
