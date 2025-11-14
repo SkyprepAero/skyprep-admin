@@ -234,12 +234,21 @@ const QuestionForm = () => {
       if (isEdit) {
         await questionAPI.update(id, questionData)
         toast.success('Question updated successfully')
+        navigate(redirectPath)
       } else {
         await questionAPI.create(questionData)
         toast.success('Question created successfully')
+        setFormData(prev => ({
+          ...prev,
+          questionText: '',
+          explanation: '',
+          marks: resolveDefaultMarksForChapter(prev.chapter) || 1
+        }))
+        setOptions([
+          { text: '', isCorrect: false },
+          { text: '', isCorrect: false }
+        ])
       }
-      
-      navigate(redirectPath)
     } catch (error) {
       console.error('Error saving question:', error)
       const errorMessage = error.response?.data?.message || 'Failed to save question'
