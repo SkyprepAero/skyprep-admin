@@ -60,7 +60,13 @@ const QuestionForm = () => {
   const fetchChapters = async () => {
     try {
       const response = await chapterAPI.getAll({ limit: 100 })
-      setChapters(response.data.data.chapters || response.data.data)
+      const chaptersData = response.data.data.chapters || response.data.data || []
+      const sortedChapters = [...chaptersData].sort((a, b) => {
+        const dateA = new Date(a.createdAt || 0).getTime()
+        const dateB = new Date(b.createdAt || 0).getTime()
+        return dateB - dateA
+      })
+      setChapters(sortedChapters)
     } catch (error) {
       console.error('Error fetching chapters:', error)
       toast.error('Failed to fetch chapters')

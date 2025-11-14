@@ -53,7 +53,13 @@ const Chapters = () => {
         : await chapterAPI.getAll(params)
 
       const responseData = response.data.data
-      setChapters(responseData.chapters || responseData)
+      const chaptersData = responseData.chapters || responseData || []
+      const sortedChapters = [...chaptersData].sort((a, b) => {
+        const dateA = new Date(a.createdAt || 0).getTime()
+        const dateB = new Date(b.createdAt || 0).getTime()
+        return dateB - dateA
+      })
+      setChapters(sortedChapters)
       setPagination(responseData.pagination || {
         currentPage: 1,
         totalPages: 1,
