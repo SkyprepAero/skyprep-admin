@@ -67,8 +67,12 @@ api.interceptors.response.use(
         case 401:
           // Unauthorized - clear token and redirect to login
           localStorage.removeItem('token')
+          localStorage.removeItem('user')
           toast.error('Session expired. Please login again.')
-          // You can add redirect logic here if needed
+          // Redirect to login if not already there
+          if (window.location.pathname !== '/login') {
+            window.location.href = '/login'
+          }
           break
           
         case 403:

@@ -1,5 +1,16 @@
 import api from './axios'
 
+// Auth APIs
+export const authAPI = {
+  login: (data) => api.post('/auth/login', data),
+  verifyPasscode: (data) => api.post('/auth/login/passcode', data),
+  getMe: () => api.get('/auth/me'),
+  logout: () => {
+    localStorage.removeItem('token')
+    localStorage.removeItem('user')
+  }
+}
+
 // Subject APIs
 export const subjectAPI = {
   getAll: (params = {}) => api.get('/subjects', { params }),
@@ -48,4 +59,46 @@ export const optionAPI = {
   reorder: (questionId, data) => api.put(`/options/question/${questionId}/reorder`, data),
 }
 
+// Course APIs
+export const courseAPI = {
+  getAll: (params = {}) => api.get('/courses', { params }),
+  getById: (id) => api.get(`/courses/${id}`),
+  create: (data) => api.post('/courses', data),
+  update: (id, data) => api.put(`/courses/${id}`, data),
+  delete: (id) => api.delete(`/courses/${id}`),
+  restore: (id) => api.patch(`/courses/${id}/restore`),
+  getDeleted: (params = {}) => api.get('/courses/deleted', { params }),
+}
+
+// Focus One APIs
+export const focusOneAPI = {
+  getAll: (params = {}) => api.get('/focus-ones', { params }),
+  getById: (id) => api.get(`/focus-ones/${id}`),
+  create: (data) => api.post('/focus-ones', data),
+  update: (id, data) => api.put(`/focus-ones/${id}`, data),
+  delete: (id) => api.delete(`/focus-ones/${id}`),
+  restore: (id) => api.patch(`/focus-ones/${id}/restore`),
+  getDeleted: (params = {}) => api.get('/focus-ones/deleted', { params }),
+  pause: (id, data = {}) => api.post(`/focus-ones/${id}/pause`, data),
+  resume: (id) => api.post(`/focus-ones/${id}/resume`),
+}
+
+// Enrollment APIs
+export const enrollmentAPI = {
+  enroll: (data) => api.post('/admin/focus-one/enroll', data),
+  getAll: (params = {}) => api.get('/admin/focus-one/enrollments', { params }),
+  getByFocusOne: (focusOneId, params = {}) => api.get(`/admin/focus-one/${focusOneId}/enrollments`, { params }),
+  getById: (userId) => api.get(`/admin/focus-one/enrollments/${userId}`),
+  update: (userId, data) => api.put(`/admin/focus-one/enrollments/${userId}`, data),
+  cancel: (userId) => api.delete(`/admin/focus-one/enrollments/${userId}`),
+}
+
+// Role APIs (for getting teachers)
+export const roleAPI = {
+  getUsersByRole: (role, params = {}) => api.get(`/roles/${role}/users`, { params }),
+}
+export const teacherAPI = {
+  getAll: (params = {}) => roleAPI.getUsersByRole('teacher', params),
+  register: (data) => api.post('/admin/teachers/register', data),
+}
 export default api

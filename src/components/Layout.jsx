@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Link, useLocation } from 'react-router-dom'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { 
   LayoutDashboard, 
   BookOpen, 
@@ -8,17 +8,30 @@ import {
   Menu, 
   X,
   Settings,
-  BarChart3
+  BarChart3,
+  LogOut,
+  Users,
+  UserCog
 } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { config } from '@/config/env'
+import { useAuth } from '@/contexts/AuthContext'
 
 const Layout = ({ children }) => {
   const [sidebarOpen, setSidebarOpen] = useState(false)
   const location = useLocation()
+  const navigate = useNavigate()
+  const { logout, user } = useAuth()
+
+  const handleLogout = () => {
+    logout()
+    navigate('/login')
+  }
 
   const navigation = [
     { name: 'Dashboard', href: '/', icon: LayoutDashboard },
+    { name: 'Focus One', href: '/focus-one', icon: Users },
+    { name: 'Teachers', href: '/teachers', icon: UserCog },
     { name: 'Subjects', href: '/subjects', icon: BookOpen },
     { name: 'Chapters', href: '/chapters', icon: FileText },
     { name: 'Questions', href: '/questions', icon: HelpCircle },
@@ -116,11 +129,25 @@ const Layout = ({ children }) => {
           <div className="flex flex-1 gap-x-4 self-stretch lg:gap-x-6">
             <div className="flex flex-1" />
             <div className="flex items-center gap-x-4 lg:gap-x-6">
+              {user && (
+                <span className="text-sm text-gray-600 hidden sm:block">
+                  {user.name || user.email}
+                </span>
+              )}
               <button
                 type="button"
                 className="-m-2.5 p-2.5 text-gray-400 hover:text-gray-500"
+                title="Settings"
               >
                 <Settings className="h-6 w-6" />
+              </button>
+              <button
+                type="button"
+                onClick={handleLogout}
+                className="-m-2.5 p-2.5 text-gray-400 hover:text-gray-500"
+                title="Logout"
+              >
+                <LogOut className="h-6 w-6" />
               </button>
             </div>
           </div>
