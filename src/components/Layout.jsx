@@ -11,7 +11,8 @@ import {
   BarChart3,
   LogOut,
   Users,
-  UserCog
+  UserCog,
+  Calendar
 } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { config } from '@/config/env'
@@ -30,6 +31,7 @@ const Layout = ({ children }) => {
 
   const navigation = [
     { name: 'Dashboard', href: '/', icon: LayoutDashboard },
+    { name: 'Calendar', href: '/calendar', icon: Calendar },
     { name: 'Focus One', href: '/focus-one', icon: Users },
     { name: 'Teachers', href: '/teachers', icon: UserCog },
     { name: 'Subjects', href: '/subjects', icon: BookOpen },

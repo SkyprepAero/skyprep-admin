@@ -101,4 +101,20 @@ export const teacherAPI = {
   getAll: (params = {}) => roleAPI.getUsersByRole('teacher', params),
   register: (data) => api.post('/admin/teachers/register', data),
 }
+
+// Public Holiday APIs
+export const publicHolidayAPI = {
+  getAll: (params = {}) => api.get('/admin/public-holidays', { params }),
+  getById: (id) => api.get(`/admin/public-holidays/${id}`),
+  create: (data) => api.post('/admin/public-holidays', data),
+  update: (id, data) => api.put(`/admin/public-holidays/${id}`, data),
+  delete: (id) => api.delete(`/admin/public-holidays/${id}`),
+}
+
+// Session APIs (for calendar view)
+export const sessionAPI = {
+  getAll: (params = {}) => api.get('/sessions', { params }),
+  getById: (id) => api.get(`/sessions/${id}`),
+}
+
 export default api

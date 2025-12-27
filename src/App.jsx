@@ -16,6 +16,7 @@ import FocusOneEnrollForm from './pages/FocusOneEnrollForm'
 import FocusOneEnrollmentDetail from './pages/FocusOneEnrollmentDetail'
 import Teachers from './pages/Teachers'
 import TeacherRegisterForm from './pages/TeacherRegisterForm'
+import Calendar from './pages/Calendar'
 
 function App() {
   return (
@@ -45,6 +46,7 @@ function App() {
                       <Route path="/focus-one/enrollments/:userId" element={<FocusOneEnrollmentDetail />} />
                       <Route path="/teachers" element={<Teachers />} />
                       <Route path="/teachers/register" element={<TeacherRegisterForm />} />
+                      <Route path="/calendar" element={<Calendar />} />
                       <Route path="*" element={<Navigate to="/" replace />} />
                     </Routes>
                   </Layout>
